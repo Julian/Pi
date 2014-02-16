@@ -1,0 +1,19 @@
+---
+
+- name: Add the PyPy PPA
+  sudo: yes
+  apt_repository: repo='ppa:pypy/ppa' update_cache=yes
+
+- name: Install PyPy
+  sudo: yes
+  apt: name={{ item }} state=installed
+  with_items:
+    - pypy{{ '-upstream' if ansible_distribution == 'Raspbian' else '' }}
+    - pypy{{ '-upstream' if ansible_distribution == 'Raspbian' else '' }}-dev
+
+- name: Download the pip installer
+  get_url: url=https://raw.github.com/pypa/pip/master/contrib/get-pip.py dest=/tmp/get-pip.py
+
+- name: Install pip
+  sudo: yes
+  command: /usr/bin/pypy /tmp/get-pip.py creates=/usr/local/bin/pip

@@ -1,0 +1,34 @@
+---
+
+- name: Update apt cache
+  sudo: yes
+  apt: update_cache=yes
+
+- name: Upgrade all safe packages
+  sudo: yes
+  apt: upgrade=safe
+
+- name: Install some useful packages
+  sudo: yes
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - build-essential
+    - gcc
+    - git
+    - sudo
+    - tmux
+    - vim-nox
+    - zsh
+
+- name: Install some useful Debian/Ubuntu specific packages
+  sudo: yes
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - apt-transport-https
+    - debian-goodies
+    - python-software-properties
+    - unattended-upgrades
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- include: python.yml tags=python
+- include: ssl.yml tags=ssl

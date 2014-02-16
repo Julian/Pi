@@ -1,0 +1,37 @@
+- name: Add the ZNC PPA
+  sudo: yes
+  apt_repository: repo='ppa:teward/znc' update_cache=yes
+
+- name: Install ZNC
+  sudo: yes
+  apt: name={{ item }} state=present
+  with_items:
+    - znc
+    - znc-dev
+    - znc-perl
+    - znc-python
+
+- name: Create a ZNC group
+  sudo: yes
+  group: name=znc state=present
+
+- name: Create a ZNC user
+  sudo: yes
+  user: name=znc state=present system=yes group=znc home={{ znc_datadir }}
+
+- name: Add the ZNC init script
+  sudo: yes
+  template: src=etc/init.d/znc.j2
+            dest=/etc/init.d/znc
+            owner=root
+            group=root
+            mode=755
+
+- name: Enable the ZNC service
+  service: name=znc enabled=true
+
+- name: Create a directory for plugin repos
+  sudo: yes
+  file: path={{ znc_datadir }}/lib/ state=directory owner=znc group=znc
+
+- include: znc-push.yml tags=znc-push user=znc
