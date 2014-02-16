@@ -1,0 +1,5 @@
+hosts
+roles/common/files/grayvines*
+
+# vagrant trash
+vagrant_ansible_inventory_default
