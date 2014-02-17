@@ -32,4 +32,5 @@
                                          --logfile=/srv/log/pipy/web.log
                                          --pidfile=/srv/run/pipy-web.pid
                                          --nodaemon pi
-                                         --port tcp:8080"
+                                         --port
+                                         ssl:port=4443:privateKey=/etc/ssl/private/grayvines.com.key:extraCertChain=/etc/ssl/certs/grayvines.com_chain.pem:certKey=/etc/ssl/certs/grayvines.com.pem"
