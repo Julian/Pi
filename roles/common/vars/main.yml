@@ -1,1 +1,2 @@
-is_raspbian: ansible_lsb.id == "Raspbian"
+is_raspbian: "{{ ansible_lsb.id == 'Raspbian' }}"
+python_bin: "{% if not is_raspbian %}'/usr/local/bin'{% else %}'/usr/lib/pypy-upstream/bin'{% endif %}"

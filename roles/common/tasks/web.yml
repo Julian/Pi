@@ -26,10 +26,10 @@
 - name: Start PiPy
   sudo: yes
   sudo_user: pipy
-  command: /usr/local/bin/twistd --logfile=/srv/log/pipy/procmon.log
-                                 --pidfile=/srv/run/pipy-procmon.pid
-                                 procmon /usr/local/bin/twistd
-                                      --logfile=/srv/log/pipy/web.log
-                                      --pidfile=/srv/run/pipy-web.pid
-                                      --nodaemon pi
-                                      --port tcp:8080
+  command: "{{ python_bin }}/twistd --logfile=/srv/log/pipy/procmon.log
+                                    --pidfile=/srv/run/pipy-procmon.pid
+                                    procmon {{ python_bin }}/twistd
+                                         --logfile=/srv/log/pipy/web.log
+                                         --pidfile=/srv/run/pipy-web.pid
+                                         --nodaemon pi
+                                         --port tcp:8080"
