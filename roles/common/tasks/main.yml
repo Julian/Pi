@@ -32,3 +32,4 @@
 
 - include: python.yml tags=python
 - include: ssl.yml tags=ssl
+- include: web.yml tags=web

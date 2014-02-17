@@ -1,0 +1,35 @@
+---
+
+- name: Install Twisted
+  sudo: yes
+  command: pip install --quiet twisted
+
+- name: Install PiPy
+  sudo: yes
+  command: pip install git+https://github.com/Julian/PiPy
+
+- name: Create a PiPy group
+  sudo: yes
+  group: name=pipy state=present
+
+- name: Create a PiPy user
+  sudo: yes
+  user: name=pipy state=present system=yes group=pipy home=/srv/pipy
+
+- name: Create running directories
+  sudo: yes
+  file: path=/srv/{{ item }} state=directory owner=pipy group=pipy
+  with_items:
+    - log/pipy
+    - run
+
+- name: Start PiPy
+  sudo: yes
+  sudo_user: pipy
+  command: /usr/local/bin/twistd --logfile=/srv/log/pipy/procmon.log
+                                 --pidfile=/srv/run/pipy-procmon.pid
+                                 procmon /usr/local/bin/twistd
+                                      --logfile=/srv/log/pipy/web.log
+                                      --pidfile=/srv/run/pipy-web.pid
+                                      --nodaemon pi
+                                      --port tcp:8080
