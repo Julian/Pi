@@ -2,7 +2,7 @@
 
 - name: Install Twisted
   sudo: yes
-  command: pypy -m pip install --quiet twisted
+  command: pypy -m pip install --quiet pyopenssl pycrypto twisted
 
 - name: Install PiPy
   sudo: yes
@@ -14,7 +14,7 @@
 
 - name: Create a PiPy user
   sudo: yes
-  user: name=pipy state=present system=yes group=pipy home=/srv/pipy
+  user: name=pipy state=present system=yes group=pipy groups=ssl-cert home=/srv/pipy
 
 - name: Create running directories
   sudo: yes
