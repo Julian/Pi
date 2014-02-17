@@ -1,0 +1,1 @@
+is_raspbian: ansible_lsb.id == "Raspbian"
