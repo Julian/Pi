@@ -2,11 +2,11 @@
 
 - name: Install Twisted
   sudo: yes
-  command: pip install --quiet twisted
+  command: pypy -m pip install --quiet twisted
 
 - name: Install PiPy
   sudo: yes
-  command: pip install git+https://github.com/Julian/PiPy
+  command: pypy -m pip install git+https://github.com/Julian/PiPy
 
 - name: Create a PiPy group
   sudo: yes
