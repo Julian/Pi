@@ -1,6 +1,7 @@
 - name: Add the ZNC PPA
   sudo: yes
   apt_repository: repo='ppa:teward/znc' update_cache=yes
+  when: not is_raspbian
 
 - name: Install ZNC
   sudo: yes
