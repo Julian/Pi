@@ -9,8 +9,8 @@
   sudo: yes
   apt: name={{ item }} state=installed
   with_items:
-    - pypy{{ "-upstream" if is_raspbian else "" }}
-    - pypy{{ "-upstream" if is_raspbian else "" }}-dev
+    - pypy{{ "-upstream" if is_raspbian|bool else "" }}
+    - pypy{{ "-upstream" if is_raspbian|bool else "" }}-dev
 
 - name: Download the pip installer
   get_url: url=https://raw.github.com/pypa/pip/master/contrib/get-pip.py dest=/tmp/get-pip.py
