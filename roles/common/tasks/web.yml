@@ -26,7 +26,8 @@
 - name: Start PiPy
   sudo: yes
   sudo_user: pipy
-  command: "{{ python_bin }}/twistd --logfile=/srv/log/pipy/procmon.log
+  command: creates=/srv/run/pipy-procmon.pid
+           "{{ python_bin }}/twistd --logfile=/srv/log/pipy/procmon.log
                                     --pidfile=/srv/run/pipy-procmon.pid
                                     procmon {{ python_bin }}/twistd
                                          --logfile=/srv/log/pipy/web.log
