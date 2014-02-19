@@ -3,7 +3,7 @@
 - name: Add the PyPy PPA
   sudo: yes
   apt_repository: repo='ppa:pypy/ppa' update_cache=yes
-  when: not is_raspbian
+  when: not is_raspbian|bool
 
 - name: Install PyPy
   sudo: yes
