@@ -6,7 +6,7 @@
 
 - name: Install PiPy
   sudo: yes
-  command: pypy -m pip install git+https://github.com/Julian/PiPy
+  command: pypy -m pip install {{ pipy }}
 
 - name: Create a PiPy group
   sudo: yes
