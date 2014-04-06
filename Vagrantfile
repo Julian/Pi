@@ -8,7 +8,7 @@ Vagrant.configure('2') do |config|
   config.vm.box_url = 'http://files.vagrantup.com/precise64.box'
 
   config.vm.hostname = 'pivm.local'
-  config.vm.network :forwarded_port, guest: 8080, host: 8888
+  config.vm.network :forwarded_port, guest: 4443, host: 4443
   config.vm.network :private_network, ip: '192.168.33.10'
 
   ['Great', 'PiPy'].each do |project|
