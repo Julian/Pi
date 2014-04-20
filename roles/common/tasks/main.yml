@@ -4,10 +4,6 @@
   sudo: yes
   apt: update_cache=yes
 
-- name: Upgrade all safe packages
-  sudo: yes
-  apt: upgrade=safe
-
 - name: Install some useful packages
   sudo: yes
   apt: pkg={{ item }} state=installed
