@@ -1,4 +1,6 @@
 pipy: git+https://github.com/Julian/PiPy
 
+pipy_user: pipy
+
 znc_datadir: /var/lib/znc
 znc_version: 1.2

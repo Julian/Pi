@@ -23,6 +23,8 @@
     - apt-transport-https
     - debian-goodies
     - python-software-properties
+    - systemd
+    - systemd-sysv
     - unattended-upgrades
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 

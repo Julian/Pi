@@ -10,28 +10,27 @@
 
 - name: Create a PiPy group
   sudo: yes
-  group: name=pipy state=present
+  group: name={{ pipy_user }} state=present
 
 - name: Create a PiPy user
   sudo: yes
-  user: name=pipy state=present system=yes group=pipy groups=ssl-cert home=/srv/pipy
+  user: name={{ pipy_user }}
+        state=present
+        system=yes
+        group={{ pipy_user }}
+        groups=ssl-cert
+        home=/srv/pipy
 
-- name: Create running directories
+- name: Add a PiPy Service
   sudo: yes
-  file: path=/srv/{{ item }} state=directory owner=pipy group=pipy
-  with_items:
-    - log/pipy
-    - run
+  template: src=etc/systemd/system/pipy.service
+            dest=/etc/systemd/system/pipy.service
+            owner=root
+            group=root
+            mode=0644
+  notify:
+    reload systemd
 
 - name: Start PiPy
   sudo: yes
-  sudo_user: pipy
-  command: creates=/srv/run/pipy-procmon.pid
-           {{ python_bin }}/twistd --logfile=/srv/log/pipy/procmon.log
-                                    --pidfile=/srv/run/pipy-procmon.pid
-                                    procmon {{ python_bin }}/twistd
-                                         --logfile=/srv/log/pipy/web.log
-                                         --pidfile=/srv/run/pipy-web.pid
-                                         --nodaemon pi
-                                         --port
-                                         ssl:port=4443:privateKey=/etc/ssl/private/grayvines.com.key:extraCertChain=/etc/ssl/certs/grayvines.com_chain.pem:certKey=/etc/ssl/certs/grayvines.com.pem
+  service: name=pipy state=started enabled=yes
