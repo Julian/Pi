@@ -4,8 +4,8 @@
 PROJECT_HOME = ENV['PROJECT_HOME'] || "#{ENV.fetch('HOME')}/Development"
 
 Vagrant.configure('2') do |config|
-  config.vm.box = 'precise64'
-  config.vm.box_url = 'http://files.vagrantup.com/precise64.box'
+  config.vm.box = 'trusty64'
+  config.vm.box_url = 'https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-i386-vagrant-disk1.box'
 
   config.vm.hostname = 'pivm.local'
   config.vm.network :forwarded_port, guest: 4443, host: 4443
@@ -20,6 +20,7 @@ Vagrant.configure('2') do |config|
 
   config.vm.provision :ansible do |ansible|
     ansible.extra_vars = 'vars/vagrant.yml'
+    ansible.host_key_checking = false
     ansible.playbook = 'playbook.yml'
     ansible.tags = ENV['ANSIBLE_TAGS']
     ansible.verbose = ENV['ANSIBLE_VERBOSITY']
