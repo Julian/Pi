@@ -2,11 +2,9 @@
 
 - name:  rasperry pi server configuration
   hosts: all
-  user:  pi
-  gather_facts: True
+  user:  julian
   vars_files:
     - vars/defaults.yml
 
   roles:
-    - common
-    - irc
+    - { role : common }
