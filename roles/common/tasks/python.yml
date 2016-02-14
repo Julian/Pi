@@ -1,20 +1,48 @@
 ---
 
-- name: Add the PyPy PPA
-  sudo: yes
-  apt_repository: repo='ppa:pypy/ppa' update_cache=yes
-  when: not (is_raspbian | bool)
-
-- name: Install PyPy
-  sudo: yes
-  apt: name={{ item }} state=installed
+- name: Install PyPy dependencies
+  become: yes
+  become_user: root
+  apt: name={{item}} state=installed
   with_items:
-    - pypy{{ "-upstream" if is_raspbian|bool else "" }}
-    - pypy{{ "-upstream" if is_raspbian|bool else "" }}-dev
+    - bzip2
+    - libffi5
+    - tar
 
-- name: Download the pip installer
-  get_url: url=https://raw.github.com/pypa/pip/master/contrib/get-pip.py dest=/tmp/get-pip.py
+- name: Ensure /usr/local/opt exists
+  become: yes
+  become_user: root
+  file: path=/usr/local/opt/ mode=755 owner=root group=root state=directory recurse=yes
+
+- name: Check if this version of PyPy is already installed
+  stat: path="/usr/local/opt/{{ pypy_distribution }}/bin/pypy"
+  register: pypy_installed
+
+- name: Download PyPy
+  become: yes
+  become_user: root
+  unarchive: >
+    src="https://bitbucket.org/pypy/pypy/downloads/{{ pypy_distribution }}.tar.bz2"
+    dest=/usr/local/opt/
+    copy=no
+  when: not pypy_installed.stat.exists
+
+- name: Check if this version of PyPy has a pip
+  stat: path="/usr/local/opt/{{ pypy_distribution }}/bin/pip"
+  register: pip_installed
 
 - name: Install pip
-  sudo: yes
-  command: /usr/bin/pypy /tmp/get-pip.py creates=/usr/local/bin/pip
+  become: yes
+  become_user: root
+  command: /usr/local/opt/{{ pypy_distribution }}/bin/pypy -m ensurepip --upgrade
+  when: not pip_installed.stat.exists
+
+- name: Create an unversioned symlink for the PyPy distribution
+  become: yes
+  become_user: root
+  file: src="/usr/local/opt/{{ pypy_distribution }}" dest=/usr/local/opt/pypy state=link
+
+- name: Create an unversioned symlink for the PyPy binary
+  become: yes
+  become_user: root
+  file: src="/usr/local/opt/{{ pypy_distribution }}/bin/pypy" dest=/usr/local/bin/pypy state=link
