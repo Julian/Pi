@@ -1,0 +1,23 @@
+---
+
+# Sample Usage:
+#
+#   $ ANSIBLE_CONFIG=<(printf '[defaults]\nask_pass=True\n[ssh_connection]\nssh_args=-o PasswordAuthentication=yes\n') ansible-playbook -i raspberrypi, playbooks/bootstrap.yml
+
+- name:  Bootstrap an initial raspbian installation
+  hosts: all
+  remote_user: pi
+  become: yes
+  become_user: root
+  tasks:
+    - name: Create a new user
+      user: name=julian comment="Julian Berman" groups="sudo"
+
+    - name: Add authorized SSH keys
+      authorized_key: user=julian key=https://github.com/Julian.keys
+
+    - name: Ensure sudoers are not prompted for passwords
+      lineinfile: "dest=/etc/sudoers state=present regexp='^%sudo' line='%sudo ALL=(ALL) NOPASSWD: ALL' validate='visudo -cf %s'"
+
+    - name: Remove the pi user from sudoers, which it seems has its own entry
+      lineinfile: "dest=/etc/sudoers state=absent regexp='^%pi' validate='visudo -cf %s'"
