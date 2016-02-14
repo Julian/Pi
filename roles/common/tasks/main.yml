@@ -1,12 +1,9 @@
 ---
 
-- name: Update apt cache
-  sudo: yes
-  apt: update_cache=yes
-
 - name: Install some useful packages
-  sudo: yes
-  apt: pkg={{ item }} state=installed
+  become: yes
+  become_user: root
+  apt: pkg={{ item }} state=installed update_cache=yes cache_valid_time=3600
   with_items:
     - build-essential
     - gcc
