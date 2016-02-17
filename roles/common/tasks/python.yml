@@ -51,3 +51,9 @@
   become: yes
   become_user: root
   file: src="/usr/local/opt/{{ pypy_distribution }}/bin/pypy" dest=/usr/local/bin/pypy state=link
+
+- name: Install virtualenv
+  become: yes
+  become_user: root
+  pip: name=virtualenv
+       executable="/usr/local/opt/{{ pypy_distribution }}/bin/pip"
