@@ -12,7 +12,12 @@
 - name: Ensure /usr/local/opt exists
   become: yes
   become_user: root
-  file: path=/usr/local/opt/ mode=755 owner=root group=root state=directory recurse=yes
+  file: path=/usr/local/opt/
+        mode=755
+        owner=root
+        group=root
+        state=directory
+        recurse=yes
 
 - name: Check if this version of PyPy is already installed
   stat: path="/usr/local/opt/{{ pypy_distribution }}/bin/pypy"
