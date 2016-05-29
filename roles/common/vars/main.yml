@@ -1,4 +1,4 @@
 is_raspbian: "{{ ansible_lsb.id == 'Raspbian' }}"
 
-pypy_version: 4.0.1
+pypy_version: 5.1.1
 pypy_distribution : "pypy-{{ pypy_version }}-linux-armhf-raspbian"
