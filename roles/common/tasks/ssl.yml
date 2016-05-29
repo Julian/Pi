@@ -1,17 +1,21 @@
 ---
 
 - name: Install ssl-cert to create the group
-  sudo: yes
+  become: yes
+  become_user: root
   apt: pkg=ssl-cert state=installed
 
 - name: Copy SSL private key into place
-  sudo: yes
+  become: yes
+  become_user: root
   copy: src=grayvines.com.key dest=/etc/ssl/private/grayvines.com.key group=ssl-cert owner=root mode=640
 
 - name: Copy SSL certificate key into place
-  sudo: yes
+  become: yes
+  become_user: root
   copy: src=grayvines.com.pem dest=/etc/ssl/certs/grayvines.com.pem group=root owner=root mode=644
 
 - name: Copy extra certficate chain into place
-  sudo: yes
+  become: yes
+  become_user: root
   copy: src=grayvines.com_chain.pem dest=/etc/ssl/certs/grayvines.com_chain.pem group=root owner=root mode=644

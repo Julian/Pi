@@ -1,19 +1,23 @@
 ---
 
 - name: Install Twisted
-  sudo: yes
+  become: yes
+  become_user: root
   command: pypy -m pip install --quiet pyopenssl pycrypto twisted
 
 - name: Install PiPy
-  sudo: yes
+  become: yes
+  become_user: root
   command: pypy -m pip install {{ pipy }}
 
 - name: Create a PiPy group
-  sudo: yes
+  become: yes
+  become_user: root
   group: name={{ pipy_user }} state=present
 
 - name: Create a PiPy user
-  sudo: yes
+  become: yes
+  become_user: root
   user: name={{ pipy_user }}
         state=present
         system=yes
@@ -22,7 +26,8 @@
         home=/srv/pipy
 
 - name: Add a PiPy Service
-  sudo: yes
+  become: yes
+  become_user: root
   template: src=etc/systemd/system/pipy.service
             dest=/etc/systemd/system/pipy.service
             owner=root
@@ -32,5 +37,6 @@
     reload systemd
 
 - name: Start PiPy
-  sudo: yes
+  become: yes
+  become_user: root
   service: name=pipy state=started enabled=yes

@@ -1,5 +1,6 @@
 ---
 
 - name: reload systemd
-  sudo: yes
+  become: yes
+  become_user: root
   command: systemctl daemon-reload
