@@ -24,6 +24,5 @@
     - unattended-upgrades
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
-- include: python.yml tags=python
-- include: ssl.yml tags=ssl
-- include: web.yml tags=web
+- include: python.yml
+- include: web.yml
