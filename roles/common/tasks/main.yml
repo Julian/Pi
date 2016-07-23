@@ -8,6 +8,7 @@
     - build-essential
     - gcc
     - git
+    - linux-tools
     - sudo
     - tmux
     - vim-nox
