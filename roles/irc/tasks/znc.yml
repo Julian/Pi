@@ -24,14 +24,14 @@
   become_user: root
   user: name=znc state=present system=yes group=znc home={{ znc_datadir }}
 
-- name: Add the ZNC init script
+- name: Add the ZNC systemd script
   become: yes
   become_user: root
-  template: src=etc/init.d/znc.j2
-            dest=/etc/init.d/znc
-            owner=root
-            group=root
-            mode=755
+  copy: src=etc/systemd/system/znc.service
+        dest=/etc/systemd/system/znc.service
+        owner=root
+        group=root
+        mode=0644
 
 - name: Enable the ZNC service
   become: yes
