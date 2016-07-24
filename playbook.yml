@@ -8,3 +8,5 @@
 
   roles:
     - { role : common }
+    - { role : irc }
+    - { role : home-assistant }

@@ -1,0 +1,45 @@
+# {{ ansible_managed }}
+
+homeassistant:
+  name: Home
+  temperature_unit: F
+  time_zone: America/New_York
+  latitude: 40.7388814
+  longitude: -73.9917875
+
+frontend:
+
+discovery:
+
+conversation:
+
+history:
+
+logbook:
+
+sun:
+
+zwave:
+  usb_path: /dev/ttyACM0
+
+sensor:
+  platform: forecast
+  api_key: de347925cb03077b287ca7ad4c956c2c
+  monitored_conditions:
+    - summary
+    - icon
+    - nearest_storm_distance
+    - nearest_storm_bearing
+    - precip_type
+    - precip_intensity
+    - precip_probability
+    - temperature
+    - apparent_temperature
+    - dew_point
+    - wind_speed
+    - wind_bearing
+    - cloud_cover
+    - humidity
+    - pressure
+    - visibility
+    - ozone

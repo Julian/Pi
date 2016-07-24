@@ -1,0 +1,49 @@
+- name: Create a Home Assistant user
+  become: yes
+  become_user: root
+  group: name=hass state=present
+
+- name: Create a Home Assistant user
+  become: yes
+  become_user: root
+  user: name=hass
+        state=present
+        system=yes
+        group=hass
+        home=/srv/hass/
+
+- include: zwave.yml
+
+- name: Create a Home Assistant virtualenv
+  become: yes
+  become_user: hass
+  pip: name='git+https://github.com/Julian/home-assistant@py2#egg=homeassistant[cast,color,conversation,discovery,forecastio,sun]'
+       virtualenv=/srv/hass/venv/
+       virtualenv_command=/usr/local/opt/pypy/bin/virtualenv
+       virtualenv_python=/usr/local/opt/pypy/bin/pypy
+
+- name: Create the directory for configuration
+  become: yes
+  become_user: hass
+  file: path=/srv/hass/.homeassistant state=directory owner=hass group=hass
+
+- name: Drop the Home Assistant configuration
+  become: yes
+  become_user: hass
+  copy: src=configuration.yaml dest=/srv/hass/.homeassistant/configuration.yaml
+
+- name: Add a Home Assistant Service
+  become: yes
+  become_user: root
+  template: src=etc/systemd/system/hass.service
+            dest=/etc/systemd/system/hass.service
+            owner=root
+            group=root
+            mode=0644
+  notify:
+    reload systemd
+
+- name: Start Home Assistant
+  become: yes
+  become_user: root
+  service: name=hass state=started enabled=yes

@@ -1,0 +1,4 @@
+- name: install Open-ZWave source dependencies
+  become: yes
+  become_user: root
+  apt: pkg=libudev-dev state=installed
