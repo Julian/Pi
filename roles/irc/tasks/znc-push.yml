@@ -1,11 +1,14 @@
 - name: Checkout znc-push
-  sudo: yes
+  become: yes
+  become_user: root
   git: repo=https://github.com/jreese/znc-push dest={{ znc_datadir }}/lib/znc-push
 
 - name: Build znc-push
-  sudo: yes
+  become: yes
+  become_user: root
   command: make chdir={{ znc_datadir }}/lib/znc-push
 
 - name: Install znc-push
-  sudo: yes
+  become: yes
+  become_user: root
   command: mv {{ znc_datadir }}/lib/znc-push/push.so {{ znc_datadir }}

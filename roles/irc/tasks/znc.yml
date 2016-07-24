@@ -1,10 +1,12 @@
 - name: Add the ZNC PPA
-  sudo: yes
+  become: yes
+  become_user: root
   apt_repository: repo='ppa:teward/znc' update_cache=yes
   when: not is_raspbian|bool
 
 - name: Install ZNC
-  sudo: yes
+  become: yes
+  become_user: root
   apt: name={{ item }} state=present
   with_items:
     - znc
@@ -13,15 +15,18 @@
     - znc-python
 
 - name: Create a ZNC group
-  sudo: yes
+  become: yes
+  become_user: root
   group: name=znc state=present
 
 - name: Create a ZNC user
-  sudo: yes
+  become: yes
+  become_user: root
   user: name=znc state=present system=yes group=znc home={{ znc_datadir }}
 
 - name: Add the ZNC init script
-  sudo: yes
+  become: yes
+  become_user: root
   template: src=etc/init.d/znc.j2
             dest=/etc/init.d/znc
             owner=root
@@ -29,10 +34,13 @@
             mode=755
 
 - name: Enable the ZNC service
+  become: yes
+  become_user: root
   service: name=znc enabled=true
 
 - name: Create a directory for plugin repos
-  sudo: yes
+  become: yes
+  become_user: root
   file: path={{ znc_datadir }}/lib/ state=directory owner=znc group=znc
 
-- include: znc-push.yml tags=znc-push user=znc
+- include: znc-push.yml user=znc
