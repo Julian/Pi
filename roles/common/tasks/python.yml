@@ -45,12 +45,18 @@
 - name: Create an unversioned symlink for the PyPy distribution
   become: yes
   become_user: root
-  file: src="/usr/local/opt/{{ pypy_distribution }}" dest=/usr/local/opt/pypy state=link
+  file: >
+    src="/usr/local/opt/{{ pypy_distribution }}"
+    dest=/usr/local/opt/pypy
+    state=link
 
 - name: Create an unversioned symlink for the PyPy binary
   become: yes
   become_user: root
-  file: src="/usr/local/opt/{{ pypy_distribution }}/bin/pypy" dest=/usr/local/bin/pypy state=link
+  file: >
+    src="/usr/local/opt/{{ pypy_distribution }}/bin/pypy"
+    dest=/usr/local/bin/pypy
+    state=link
 
 - name: Install virtualenv
   become: yes

@@ -4,16 +4,10 @@
 Description=PiPy Web Service
 
 [Service]
-ExecStart={{ python_bin }}/twistd --pidfile= --nodaemon procmon     \
-          {{ python_bin }}/twistd --pidfile= --nodaemon pi          \
-              --canonical-url 'https://pi.grayvines.com'            \
-              --redirect 'tcp:8080'                                 \
-              --port ssl:port=4443:privateKey=/etc/ssl/private/grayvines.com.key:extraCertChain=/etc/ssl/certs/grayvines.com_chain.pem:certKey=/etc/ssl/certs/grayvines.com.pem
-
-User={{ pipy_user }}
-Group={{ pipy_user }}
-
 Restart=always
+ExecStart={{ python_bin }}/twistd --nodaemon \
+          --uid {{ pipy_user }} --gid {{ pipy_user }} web \
+          --port le:{{ pipy_certs_dir }}:tcp:443
 
 [Install]
 WantedBy=multi-user.target
