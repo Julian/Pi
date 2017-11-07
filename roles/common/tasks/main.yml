@@ -11,7 +11,6 @@
     - linux-tools
     - sudo
     - tmux
-    - vim-nox
     - zsh
 
 - name: Install some useful Debian/Ubuntu specific packages
