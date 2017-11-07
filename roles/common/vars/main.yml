@@ -1,6 +1,6 @@
 is_raspbian: "{{ ansible_lsb.id == 'Raspbian' }}"
 
-pypy_version: 5.3.1
+pypy_version: 5.9.0
 pypy_distribution: "pypy2-v{{ pypy_version }}-linux-armhf-raspbian"
 
 pipy_certs_dir: /etc/ssl/private/pipy/
