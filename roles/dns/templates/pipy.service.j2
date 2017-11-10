@@ -1,0 +1,13 @@
+[Unit]
+Description=PiPy Service
+After=network.target
+
+[Service]
+ExecStart=/usr/local/opt/{{ pypy_distribution }}/bin/pypy -m twisted dns --recursive --cache
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+Alias=pipy.service
