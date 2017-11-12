@@ -1,5 +1,16 @@
 ---
 
+- name: Install some useful Debian/Ubuntu specific packages
+  become: yes
+  become_user: root
+  apt: pkg={{ item }} state=installed
+  with_items:
+    - apt-transport-https
+    - debian-goodies
+    - python-software-properties
+    - unattended-upgrades
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
 - name: Install some useful packages
   become: yes
   become_user: root
@@ -12,17 +23,6 @@
     - sudo
     - tmux
     - zsh
-
-- name: Install some useful Debian/Ubuntu specific packages
-  become: yes
-  become_user: root
-  apt: pkg={{ item }} state=installed
-  with_items:
-    - apt-transport-https
-    - debian-goodies
-    - python-software-properties
-    - unattended-upgrades
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 - include: python.yml
 - include: web.yml
