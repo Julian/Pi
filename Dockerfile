@@ -15,10 +15,10 @@ RUN pex --script=ansible-playbook --output-file=/tmp/ansible-playbook.pex ansibl
 
 FROM resin/rpi-raspbian
 
+RUN apt-get update && apt-get install -y python
+
 COPY . /tmp/ansible/
 COPY --from=builder /tmp/ansible-playbook.pex /tmp/ansible/ansible-playbook.pex
-
-RUN apt-get update && apt-get install -y python
 
 RUN /tmp/ansible/ansible-playbook.pex /tmp/ansible/playbook.yml \
     --inventory-file localhost, \
