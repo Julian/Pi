@@ -22,8 +22,6 @@
   user: name={{ pipy_user }}
         state=present
         system=yes
-        group={{ pipy_user }}
-        groups=ssl-cert
         home=/srv/pipy
 
 - name: Ensure the certs dir exists
