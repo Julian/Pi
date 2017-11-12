@@ -1,5 +1,10 @@
 ---
 
+- name: Install OpenSSL headers for cryptography
+  become: yes
+  become_user: root
+  apt: pkg=libssl-dev state=installed
+
 - name: Install txacme
   become: yes
   become_user: root
