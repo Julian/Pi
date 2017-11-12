@@ -1,11 +1,13 @@
 # {{ ansible_managed }}
 [Unit]
-Description=PiPy Web Service
+Description=PiPy Service
+After=network.target
 
 [Service]
-Restart=always
-User={{ pipy_user }}
-ExecStart={{ python_bin }}/twist web --port le:{{ pipy_certs_dir }}:tcp:4443
+ExecStart=/usr/local/opt/{{ pypy_distribution }}/bin/pypy -m twisted pipy
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
