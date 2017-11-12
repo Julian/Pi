@@ -1,0 +1,27 @@
+FROM resin/rpi-raspbian as builder
+
+RUN apt-get update && apt-get install -y \
+    gcc \
+    libssl-dev \
+    libffi-dev \
+    make \
+    python-pip \
+    python-dev \
+    python-virtualenv
+
+RUN python -m pip install -U pip setuptools
+RUN python -m pip install -U pex
+RUN pex --script=ansible-playbook --output-file=/tmp/ansible-playbook.pex ansible==2.4
+
+FROM resin/rpi-raspbian
+
+COPY . /tmp/ansible/
+COPY --from=builder /tmp/ansible-playbook.pex /tmp/ansible/ansible-playbook.pex
+
+RUN apt-get update && apt-get install -y python
+
+RUN /tmp/ansible/ansible-playbook.pex /tmp/ansible/playbook.yml \
+    --inventory-file localhost, \
+    --connection local
+
+RUN rm -rf /tmp/ansible/
