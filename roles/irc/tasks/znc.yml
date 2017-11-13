@@ -36,7 +36,8 @@
 - name: Enable the ZNC service
   become: yes
   become_user: root
-  service: name=znc enabled=true
+  service: name=znc state=started enabled=yes
+  ignore_errors: yes
 
 - name: Create a directory for plugin repos
   become: yes
