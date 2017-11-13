@@ -1,9 +1,3 @@
-- name: Add the ZNC PPA
-  become: yes
-  become_user: root
-  apt_repository: repo='ppa:teward/znc' update_cache=yes
-  when: not is_raspbian|bool
-
 - name: Install ZNC
   become: yes
   become_user: root
