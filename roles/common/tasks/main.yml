@@ -19,6 +19,7 @@
     - build-essential
     - gcc
     - git
+    - htop
     - linux-tools
     - sudo
     - tmux
