@@ -4,3 +4,4 @@
   become: yes
   become_user: root
   command: systemctl daemon-reload
+  ignore_errors: yes
