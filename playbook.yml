@@ -1,6 +1,6 @@
 ---
 
-- name:  rasperry pi server configuration
+- name:  raspberry pi server configuration
   hosts: all
   user:  julian
   vars_files:
