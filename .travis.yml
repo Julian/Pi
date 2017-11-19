@@ -1,0 +1,10 @@
+sudo: required
+
+language: python
+
+services:
+  - docker
+
+script:
+  - docker build -t pi .
+  - docker run --rm --interactive --tty --volume sys/fs/cgroup:/sys/fs/cgroup:ro --cap-add=SYS_ADMIN pi true
