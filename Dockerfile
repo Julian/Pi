@@ -20,6 +20,11 @@ RUN apt-get update && apt-get install -y python
 COPY . /tmp/ansible/
 COPY --from=builder /tmp/ansible-playbook.pex /tmp/ansible/ansible-playbook.pex
 
+# Remove some Resin.io nonsense
+RUN rm -f \
+    /etc/systemd/system/basic.target.wants/launch.service \
+    /etc/systemd/system/launch.service
+
 RUN /tmp/ansible/ansible-playbook.pex /tmp/ansible/playbook.yml \
     --inventory-file localhost, \
     --connection local
