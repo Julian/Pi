@@ -49,3 +49,4 @@
   become: yes
   become_user: root
   service: name=hass state=started enabled=yes
+  ignore_errors: yes
