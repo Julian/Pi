@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+[Unit]
+Description=Home Assistant
+After=network.target
+
+[Service]
+ExecStart=/usr/local/opt/{{ pypy_distribution }}/bin/pypy -m hass
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
