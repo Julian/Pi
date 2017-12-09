@@ -12,7 +12,7 @@
         group=hass
         home=/srv/hass/
 
-- include: zwave.yml
+- import_tasks: zwave.yml
 
 - name: Create a Home Assistant virtualenv
   become: yes

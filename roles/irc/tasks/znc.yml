@@ -38,4 +38,4 @@
   become_user: root
   file: path={{ znc_datadir }}/lib/ state=directory owner=znc group=znc
 
-- include: znc-push.yml user=znc
+- import_tasks: znc-push.yml user=znc

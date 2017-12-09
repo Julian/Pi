@@ -25,5 +25,5 @@
     - tmux
     - zsh
 
-- include: python.yml
-- include: web.yml
+- import_tasks: python.yml
+- import_tasks: web.yml
