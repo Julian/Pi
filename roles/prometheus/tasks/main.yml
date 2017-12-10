@@ -1,0 +1,46 @@
+- name: Create a Prometheus group
+  become: yes
+  become_user: root
+  group: name=prometheus state=present
+
+- name: Create a Prometheus user
+  become: yes
+  become_user: root
+  user: name=prometheus
+        state=present
+        system=yes
+        group=prometheus
+        home=/srv/prometheus/
+
+- name: Download Prometheus
+  become: yes
+  become_user: prometheus
+  get_url: url=https://github.com/prometheus/prometheus/releases/download/v2.0.0/prometheus-2.0.0.linux-amd64.tar.gz
+           dest=/tmp/prometheus.tar.gz
+           checksum=sha256:e12917b25b32980daee0e9cf879d9ec197e2893924bd1574604eb0f550034d46
+
+- name: Extract Prometheus
+  become: yes
+  become_user: root
+  command: tar --strip-components=1 -C /usr/local/bin -xf /tmp/prometheus.tar.gz prometheus-2.0.0.linux-amd64/prometheus
+  creates: /usr/local/bin/prometheus
+
+- name: Clean up
+  become: yes
+  become_user: prometheus
+  file: path=/tmp/prometheus.tar.gz state=absent
+
+- name: Add a Prometheus Service
+  become: yes
+  become_user: root
+  copy: src=etc/systemd/system/prometheus.service
+        dest=/etc/systemd/system/prometheus.service
+        owner=root
+        group=root
+        mode=0644
+
+- name: Start Prometheus
+  become: yes
+  become_user: root
+  service: name=prometheus state=started enabled=yes
+  ignore_errors: yes
