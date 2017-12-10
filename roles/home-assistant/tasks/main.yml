@@ -37,11 +37,14 @@
 - name: Add a Home Assistant Service
   become: yes
   become_user: root
-  template: src=etc/systemd/system/hass.service
-            dest=/etc/systemd/system/hass.service
-            owner=root
-            group=root
-            mode=0644
+  template:
+    src=etc/systemd/system/hass.service
+    dest=/etc/systemd/system/hass.service
+    owner=root
+    group=root
+    mode=0644
+  vars:
+    python: /srv/hass/venv/bin/python
   notify:
     reload systemd
 

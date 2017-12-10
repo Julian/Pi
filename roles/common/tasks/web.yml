@@ -8,40 +8,46 @@
 - name: Install txacme
   become: yes
   become_user: root
-  pip: name=txacme
-       executable=/usr/local/opt/pypy/bin/pip
+  pip:
+    name=txacme
+    executable=/usr/local/opt/pypy/bin/pip
 
 - name: Install PiPy
   become: yes
   become_user: root
-  command: pypy -m pip install {{ pipy }}
+  command: /usr/local/opt/pypy/bin/pypy -m pip install {{ pipy }}
 
 - name: Create a PiPy user
   become: yes
   become_user: root
-  user: name={{ pipy_user }}
-        state=present
-        system=yes
-        home=/srv/pipy
+  user:
+    name={{ pipy_user }}
+    state=present
+    system=yes
+    home=/srv/pipy
 
 - name: Ensure the certs dir exists
   become: yes
   become_user: root
-  file: path={{ pipy_certs_dir }}
-        mode=755
-        owner={{ pipy_user }}
-        group={{ pipy_user }}
-        state=directory
-        recurse=yes
+  file:
+    path={{ pipy_certs_dir }}
+    mode=755
+    owner={{ pipy_user }}
+    group={{ pipy_user }}
+    state=directory
+    recurse=yes
 
 - name: Add a PiPy Service
   become: yes
   become_user: root
-  template: src=etc/systemd/system/pipy.service
-            dest=/etc/systemd/system/pipy.service
-            owner=root
-            group=root
-            mode=0644
+  template:
+    src=etc/systemd/system/pipy.service
+    dest=/etc/systemd/system/pipy.service
+    owner=root
+    group=root
+    mode=0644
+  vars:
+    python: /usr/local/opt/pypy/bin/pypy
   notify:
     reload systemd
 

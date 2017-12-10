@@ -4,7 +4,7 @@ Description=Home Assistant
 After=network.target
 
 [Service]
-ExecStart=/usr/local/opt/{{ pypy_distribution }}/bin/pypy -m hass
+ExecStart={{ python }} -m hass
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure
