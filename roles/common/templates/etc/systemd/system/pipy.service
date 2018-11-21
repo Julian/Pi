@@ -4,7 +4,7 @@ Description=PiPy Service
 After=network.target
 
 [Service]
-ExecStart={{ python }} -m twisted pipy
+ExecStart={{ python }} -m twisted pi
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure
