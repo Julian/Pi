@@ -1,4 +1,4 @@
-FROM resin/rpi-raspbian as builder
+FROM balenalib/raspberrypi3:build as builder
 
 RUN apt-get update && apt-get install -y \
     gcc \
@@ -13,7 +13,7 @@ RUN python -m pip install -U pip setuptools
 RUN python -m pip install -U pex
 RUN pex --script=ansible-playbook --output-file=/tmp/ansible-playbook.pex ansible==2.4
 
-FROM resin/rpi-raspbian
+FROM balenalib/raspberrypi3:run
 
 RUN apt-get update && apt-get install -y python
 
