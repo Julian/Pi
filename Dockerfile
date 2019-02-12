@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN python -m pip install -U pip setuptools
 RUN python -m pip install -U pex
-RUN pex --script=ansible-playbook --output-file=/tmp/ansible-playbook.pex ansible==2.4
+RUN pex --script=ansible-playbook --output-file=/tmp/ansible-playbook.pex ansible==2.7.7
 
 FROM balenalib/raspberrypi3:run
 
