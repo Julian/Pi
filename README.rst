@@ -38,3 +38,5 @@ To be automated later:
     * ``PermitRootLogin no``
 
     * denyhosts?
+
+* ``apt-get update/upgrade``
